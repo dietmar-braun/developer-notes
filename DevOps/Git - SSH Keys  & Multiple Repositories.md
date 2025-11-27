@@ -1,6 +1,6 @@
 ---
 created: 2025-11-27T11:41:30+01:00
-modified: 2025-11-27T13:14:39+01:00
+modified: 2025-11-27T13:34:04+01:00
 ---
 
 # Git - SSH Keys  & Multiple Repositories
@@ -15,7 +15,7 @@ $ ssh-keygen -t ed25519 -C "test@rest.de"
 Start ssh-agent in background:
 
 ```bash
-$ egal "(ssh-agent -s)"
+$ eval "(ssh-agent -s)"
 ```
 
 Add ssh-key to ssh-agent:
