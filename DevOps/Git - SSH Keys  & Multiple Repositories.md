@@ -8,7 +8,7 @@ modified: 2025-11-27T13:34:04+01:00
 # Create a SSH Key:
 
 ```bash
-$ ssh-keygen -t ed25519 -C "test@rest.de" 
+$ ssh-keygen -t ed25519 -C "test@test.de" 
 ```
 
 ## SSH-Agent 
@@ -31,16 +31,26 @@ Define ~/.ssh/config
 
 ``` 
 Host github.com-repo-1
-       Hostname github.com 
-       IdentifyFile=/home/[user]/.ssh/[key]
+       Hostname github.com
+       User git
+       IdentityFile=/home/[user]/.ssh/[key]
+       IdentitiesOnly yes
 
 Host github.com-repo-2
-       Hostname github.com 
+       Hostname github.com
+       User git
        IdentifyFile=/home/[user]/.ssh/[key]
+       IdentitiesOnly yes
 
 ```
 
 Adjust remote origin
 ```
+git remote remove origin 
 git remote add origin git@github.com-repo-1:[repository_path]
+```
+
+Proof ssh key
+```
+ssh -vT git@github.com-repo-1
 ```
