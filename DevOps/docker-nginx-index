@@ -1,0 +1,8 @@
+#Docker - Nginx image only allows /usr/src/app as target directory
+
+  After several try & errors it is clear: NGINX Docker allowes only /usr/src/app as target.
+
+  I tried /usr/shared/ngnix/html as directory.
+  But the content was build in it, but was always removed on docker container start.
+
+  Maybe there can be setup a command for it after running.
