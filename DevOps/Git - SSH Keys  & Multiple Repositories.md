@@ -15,13 +15,13 @@ $ ssh-keygen -t ed25519 -C "test@test.de"
 Start ssh-agent in background:
 
 ```bash
-$ eval "(ssh-agent -s)"
+eval `ssh-agent -s`
 ```
 
 Add ssh-key to ssh-agent:
 
 ```bash
-ssh-add ~/.SSH/[private_key]
+ssh-add ~/.ssh/[private_key]
 ```
 
 ## Multiple Repositories 
