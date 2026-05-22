@@ -1,0 +1,16 @@
+# Docker on Windows with WSL
+
+The reason for using WSL instead of the *Docker Desktop* application is because of a high use of the resources of the system.
+To prevent this, using WSL helps a lot doing this.
+
+  
+## Install & Update WSL
+If WSL isn't istalled yet, with the following command it is installed:
+```
+wsl install
+```
+To update WSL the next command:
+```
+wsl --update
+```
+## Start 
