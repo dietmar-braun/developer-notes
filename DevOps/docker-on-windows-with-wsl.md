@@ -13,4 +13,14 @@ To update WSL the next command:
 ```
 wsl --update
 ```
-## Start 
+## Start WSL Distro
+Starting WSL distro is done by this command(s):
+```
+wsl
+
+or
+
+wsl -d <distro_name>
+
+```
+
