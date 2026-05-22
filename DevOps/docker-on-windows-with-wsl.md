@@ -47,4 +47,29 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 
+## Add user docker
+```
+sudo usermod -aG docker $USER
+```
+Add it to usergroup docker if not done automatically.
+```
+sudo addgroup docker
+```
+
+## Test Docker
+```
+docker run hello-world
+```
+
+## Commands outside of WSL
+To handle commands in other terminals outside of WSL we can use following commands:
+
+```
+# with standard distro
+wls docker run ....
+
+# with using of distro
+wls -d <distro_name> docker run ...
+
+```
 
