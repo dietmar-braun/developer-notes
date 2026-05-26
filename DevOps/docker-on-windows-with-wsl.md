@@ -56,16 +56,24 @@ Add it to usergroup docker if not done automatically.
 sudo addgroup docker
 ```
 ## Activate Docker on WSL start
-For starting docker automatically on WSL start, the file */ect/bin/wsl.conf* has to be changed / updated.
+For starting docker automatically on WSL start, the file */ect/wsl.conf* has to be changed / updated.
+2nd a systemd command is neccessary.
+### /etc/wsl.conf changement
 Use the following command:
 ```
 sudo nano /etc/wsl.conf
 ```
+Change systemd to 'true'!
 ```
 [boot]
 systemd=true
 ```
-Change systemd to 'true'!
+### systemctl command
+Starting the docker service with systemd for starting the service on start:
+
+```
+sudo systemctl enable docker
+```
 
 ## Test Docker
 ```
