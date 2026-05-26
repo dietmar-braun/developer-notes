@@ -86,7 +86,7 @@ Click "Create Basic Task..." in the menu on the far right. Give it a name, such 
 For the trigger, select "At startup" (not "At logon," so that it is already running in the background before you log in).
 
 4. Define Action
-Select "Start a program" as the action. Simply enter "wsl" in the "Program/script" field. In the "Add arguments" field, enter the following (replace "Ubuntu" with your specific WSL distro if you are using a different one): *wsl -d Ubuntu -u root -- systemctl start docker*
+Select "Start a program" as the action. Simply enter "wsl" in the "Program/script" field. In the "Add arguments" field, enter the following (replace "Ubuntu" with your specific WSL distro if you are using a different one): *-d Ubuntu -u root -- systemctl start docker*
 
 5. Adjust Permissions
 Click "Finish." Locate the task in the list, right-click on it, and select "Properties." On the "General" tab, check the box labeled "Run with highest privileges" (since Docker requires root access) and select "Run whether user is logged on or not."
