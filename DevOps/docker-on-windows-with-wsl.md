@@ -1,6 +1,6 @@
 # Docker on Windows with WSL
 
-The reason for using WSL instead of the *Docker Desktop* application is because of a high use of the resources of the system.
+The reason for using WSL instead of the **Docker Desktop** application is because of a high use of the resources of the system.
 To prevent this, using WSL helps a lot doing this.
 
   
@@ -24,7 +24,7 @@ wsl -d <distro_name>
 ```
 ## Install Docker
 For the installation the repo of docker has to be installed 1st. 
-In this example the Ubuntu version is used. If you prefer another distro you have to look at the docker installation documentation site.
+In this example the **Ubuntu** version is used. If you prefer another distro you have to look at the docker installation documentation site.
 
 ### 1. Install Docker Repo
 ```
@@ -55,6 +55,17 @@ Add it to usergroup docker if not done automatically.
 ```
 sudo addgroup docker
 ```
+## Activate Docker on WSL start
+For starting docker automatically on WSL start, the file */ect/bin/wsl.conf* has to be changed / updated.
+Use the following command:
+```
+sudo nano /etc/wsl.conf
+```
+```
+[boot]
+systemd=true
+```
+Change systemd to 'true'!
 
 ## Test Docker
 ```
