@@ -97,6 +97,19 @@ Testing of docker by using following command:
 docker run hello-world
 ```
 
+## Make Docker directly usable in Windows System
+For using Docker directly under Windows, there are some several steps neccessary.
+
+### Add Docker CLI to system variables & add DOCKER_HOST variable
+Downlaod the current version of Docker: [Docker CLI](https://download.docker.com/win/static/stable/x86_64/)
+Unzip it in an extra directory, e.g. *C:\Docker*
+
+Update environment variables: Add the directory to system vaiables under **Path**.
+
+Add the system variable with name **DOCKER_HOST* and the value **tcp://127.0.0.1:2375**
+This is used later for the *Docker demon* in WSL.
+
+### Connect Docker CLI with WSL
 
 
 ## Commands outside of WSL
