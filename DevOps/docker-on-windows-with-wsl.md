@@ -149,5 +149,12 @@ Replace **[username]** with your username.
 
 Add the file to auto-start.
 
+## Install Docker Compose
+For 
+
 ## Testing
 Open a new terminal and use the command *docker ps*.
+
+## Install Docker Compose on Windows
+For using the command *docker compose* the installation of the it is neccessary.
+
