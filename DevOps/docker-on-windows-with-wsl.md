@@ -138,7 +138,7 @@ To bypass the password we can add some information over *visudo* / *sudo visudo*
 username ALL=(ALL) NOPASSWD: /usr/sbin/service docker *
 username ALL=(ALL) NOPASSWD: /usr/bin/dockerd
 ```
-
+Replace **username** with your username.
 ### Add vsd program to auto start
 Create a file with the name start-docker.vbs with the following content:
 ```
