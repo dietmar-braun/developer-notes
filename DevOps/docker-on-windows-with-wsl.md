@@ -75,7 +75,7 @@ Starting the docker service with systemd for starting the service on start:
 sudo systemctl enable docker
 ```
 
-## Automatic start on Windows start
+## Automatic start at Windows start
 1. Open Task Scheduler > Windows Tool
 Press the Windows key, type "Task Scheduler" (or *Aufgabenplanung*), and open the program.
 
@@ -97,21 +97,6 @@ Testing of docker by using following command:
 docker run hello-world
 ```
 
-## Make Docker directly usable in Windows System
-For using Docker directly under Windows, there are some several steps neccessary.
-
-### Add Docker CLI to system variables & add DOCKER_HOST variable
-Downlaod the current version of Docker: [Docker CLI](https://download.docker.com/win/static/stable/x86_64/)
-Unzip it in an extra directory, e.g. *C:\Docker*
-
-Update environment variables: Add the directory to system vaiables under **Path**.
-
-Add the system variable with name **DOCKER_HOST* and the value **tcp://127.0.0.1:2375**
-This is used later for the *Docker demon* in WSL.
-
-### Connect Docker CLI with WSL
-
-
 ## Commands outside of WSL
 To handle commands in other terminals outside of WSL we can use following commands:
 
@@ -123,3 +108,46 @@ wls docker run ....
 wls -d <distro_name> docker run ...
 
 ```
+
+## Make Docker directly usable in Windows System
+For using Docker directly under Windows, there are some several steps neccessary.
+
+### Add Docker CLI to system variables & add DOCKER_HOST variable
+Downlaod the current version of Docker: [Docker CLI](https://download.docker.com/win/static/stable/x86_64/)
+Unzip it in an extra directory, e.g. *C:\Docker*
+
+Update environment variables: Add the directory to system vaiables under **Path**.
+
+Add the system variable with name **DOCKER_HOST* and the value **tcp://127.0.0.1:2375**
+This is used later for the *Docker daemon* in WSL.
+
+### Connect Docker CLI with WSL
+Use the terminal with your wsl distribution and open the file deamon.json.
+```[bash]
+sudo nano /etc/docker/daemon.json
+```
+Add following lines:
+```[JSON]
+{
+  "hosts": ["unix:///var/run/docker.sock", "tcp://127.0.0.1:2375"]
+}
+```
+### Bypass WSL Password
+To bypass the password we can add some information over *visudo* / *sudo visudo*.
+```
+username ALL=(ALL) NOPASSWD: /usr/sbin/service docker *
+username ALL=(ALL) NOPASSWD: /usr/bin/dockerd
+```
+
+### Add vsd program to auto start
+Create a file with the name start-docker.vbs with the following content:
+```
+CreateObject("Wscript.Shell").Run "cmd /k wsl -d [distro] -u [username] sudo service docker stop && wsl -d [distro] -u root rm -f /var/run/docker.pid && wsl -d [distro] -u [username] sudo /usr/bin/dockerd -H unix:///var/run/docker.sock -H tcp://127.0.0.1:2375", 0, False
+```
+Replace **[distro]** with your distro or remove the distro including *-d*. 
+Replace **[username]** with your username.
+
+Add the file to auto-start.
+
+## Testing
+Open a new terminal and use the command *docker ps*.
