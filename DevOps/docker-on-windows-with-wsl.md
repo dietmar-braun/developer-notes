@@ -67,7 +67,14 @@ Change systemd to 'true'!
 ```
 [boot]
 systemd=true
+
+[automount]
+root = /
+options = "metadata"
 ```
+*systemd=true* means that Docker starts automatically on boot of WSL.
+The amount option is for mounting every filesystem parts of Windows to WSL. This is optional and should be used, if you use for example another hard drive.
+
 ### systemctl command
 Starting the docker service with systemd for starting the service on start:
 
