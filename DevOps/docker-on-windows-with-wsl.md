@@ -157,7 +157,11 @@ Replace **[username]** with your username.
 Add the file to auto-start.
 
 ## Install Docker Compose
-For 
+For the use of **docker-compose** the plugin is neccessary.
+It can be found at the [Docker Compose Release Page](https://github.com/docker/compose/releases).
+Download under assets the correct file: docker-compose-windows-x86_64.exe
+
+Copy the file in the Docker directory created before and *rename* the file to *docker-compose.exe*.
 
 ## Testing
 Open a new terminal and use the command *docker ps*.
