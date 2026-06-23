@@ -69,8 +69,8 @@ Change systemd to 'true'!
 systemd=true
 
 [automount]
-root = /
-options = "metadata"
+root=/
+options="metadata"
 ```
 *systemd=true* means that Docker starts automatically on boot of WSL.
 The amount option is for mounting every filesystem parts of Windows to WSL. This is optional and should be used, if you use for example another hard drive.
@@ -139,6 +139,22 @@ Add following lines:
   "hosts": ["unix:///var/run/docker.sock", "tcp://127.0.0.1:2375"]
 }
 ```
+#### Possible Problems
+Maybe docker has the flag **[fd://]** then the daemon.json has to be empty JSON.
+Update docker.service for this: *sudo systemctl edit docker.service*
+
+Add following lines:
+```
+[Service]
+ExecStart=
+ExecStart=/usr/bin/dockerd -H fd:// -H tcp://127.0.0.1:2375
+```
+
+Save the file and use following commands:
+1. sudo systemctl daemon reload
+2. sudo systemctl restart docker
+
+
 ### Bypass WSL Password
 To bypass the password we can add some information over *visudo* / *sudo visudo*.
 ```
