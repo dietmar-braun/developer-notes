@@ -128,6 +128,16 @@ Update environment variables: Add the directory to system vaiables under **Path*
 Add the system variable with name **DOCKER_HOST* and the value **tcp://127.0.0.1:2375**
 This is used later for the *Docker daemon* in WSL.
 
+#### Problem
+Maybe the local IP does not work. In this case find the IP of the WSL dispo **(in WSL)**:
+```
+# check if the port is in use
+sudo ss -tlnp | grep 2375
+
+# check the hostname
+hostname -I
+```
+
 ### Connect Docker CLI with WSL
 Use the terminal with your wsl distribution and open the file deamon.json.
 ```[bash]
@@ -136,18 +146,27 @@ sudo nano /etc/docker/daemon.json
 Add following lines:
 ```[JSON]
 {
-  "hosts": ["unix:///var/run/docker.sock", "tcp://127.0.0.1:2375"]
+  "hosts": [
+    "unix:///var/run/docker.sock",
+    "tcp://0.0.0.0:2375"]
 }
 ```
 #### Possible Problems
-Maybe docker has the flag **[fd://]** then the daemon.json has to be empty JSON.
-Update docker.service for this: *sudo systemctl edit docker.service*
+If there are p
 
-Add following lines:
+Maybe docker has the flag **[fd://]** then the daemon.json has to be empty JSON.
+
+Because "hosts" is set in daemon.json, it has to prevent sending *-H fd://* flag.
+```
+sudo mkdir -p /etc/systemd/system/docker.service.d
+sudo nano /etc/systemd/system/docker.service.d/override.conf
+```
+
+Add following lines in override.conf:
 ```
 [Service]
 ExecStart=
-ExecStart=/usr/bin/dockerd -H fd:// -H tcp://127.0.0.1:2375
+ExecStart=/usr/bin/dockerd
 ```
 
 Save the file and use following commands:
@@ -159,14 +178,16 @@ Save the file and use following commands:
 To bypass the password we can add some information over *visudo* / *sudo visudo*.
 ```
 username ALL=(ALL) NOPASSWD: /usr/sbin/service docker *
-username ALL=(ALL) NOPASSWD: /usr/bin/dockerd
+username ALL=(ALL) NOPASSWD: /usr/bin/dockerd *
+username ALL=(ALL) NOPASSWD: /usr/bin/systemctl start docker, /usr/bin/systemctl stop docker, /usr/bin/systemctl restart docker
 ```
 Replace **username** with your username.
 ### Add vsd program to auto start
 Create a file with the name start-docker.vbs with the following content:
 ```
-CreateObject("Wscript.Shell").Run "cmd /k wsl -d [distro] -u [username] sudo service docker stop && wsl -d [distro] -u root rm -f /var/run/docker.pid && wsl -d [distro] -u [username] sudo /usr/bin/dockerd -H unix:///var/run/docker.sock -H tcp://127.0.0.1:2375", 0, False
+CreateObject("Wscript.Shell").Run "wsl -d [distro] -u [username] sudo systemctl start docker", 0, False
 ```
+
 Replace **[distro]** with your distro or remove the distro including *-d*. 
 Replace **[username]** with your username.
 
