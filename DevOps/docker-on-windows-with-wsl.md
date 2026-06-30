@@ -83,6 +83,9 @@ sudo systemctl enable docker
 ```
 
 ## Automatic start at Windows start
+This is one way. I Prefer *Autostart with vsd program* in the next section.
+But this is just another way.
+
 1. Open Task Scheduler > Windows Tool
 Press the Windows key, type "Task Scheduler" (or *Aufgabenplanung*), and open the program.
 
@@ -98,10 +101,26 @@ Select "Start a program" as the action. Simply enter "wsl" in the "Program/scrip
 5. Adjust Permissions
 Click "Finish." Locate the task in the list, right-click on it, and select "Properties." On the "General" tab, check the box labeled "Run with highest privileges" (since Docker requires root access) and select "Run whether user is logged on or not."
 
+### Autostart with vsd program
+Create a file with the name start-docker.vbs with the following content:
+```
+CreateObject("Wscript.Shell").Run "wsl -d [distro] -u [username] sudo systemctl start docker", 0, False
+```
+
+Replace **[distro]** with your distro or remove the distro including *-d*. 
+Replace **[username]** with your username.
+
+Add the file to auto-start.
+
 ## Test Docker
-Testing of docker by using following command:
+Testing of docker by using following command **(in WSL)**:
 ```
 docker run hello-world
+```
+
+You can test it also with:
+```
+docker ps
 ```
 
 ## Commands outside of WSL
@@ -137,6 +156,7 @@ sudo ss -tlnp | grep 2375
 # check the hostname
 hostname -I
 ```
+Use this IP in system variable **DOCKER_HOST**.
 
 ### Connect Docker CLI with WSL
 Use the terminal with your wsl distribution and open the file deamon.json.
@@ -182,27 +202,13 @@ username ALL=(ALL) NOPASSWD: /usr/bin/dockerd *
 username ALL=(ALL) NOPASSWD: /usr/bin/systemctl start docker, /usr/bin/systemctl stop docker, /usr/bin/systemctl restart docker
 ```
 Replace **username** with your username.
-### Add vsd program to auto start
-Create a file with the name start-docker.vbs with the following content:
-```
-CreateObject("Wscript.Shell").Run "wsl -d [distro] -u [username] sudo systemctl start docker", 0, False
-```
 
-Replace **[distro]** with your distro or remove the distro including *-d*. 
-Replace **[username]** with your username.
-
-Add the file to auto-start.
-
-## Install Docker Compose
+### Install Docker Compose
 For the use of **docker-compose** the plugin is neccessary.
 It can be found at the [Docker Compose Release Page](https://github.com/docker/compose/releases).
 Download under assets the correct file: docker-compose-windows-x86_64.exe
 
 Copy the file in the Docker directory created before and *rename* the file to *docker-compose.exe*.
 
-## Testing
-Open a new terminal and use the command *docker ps*.
-
-## Install Docker Compose on Windows
-For using the command *docker compose* the installation of the it is neccessary.
-
+### Testing
+Open a new terminal and use the command in Windows CMD *docker ps*.
