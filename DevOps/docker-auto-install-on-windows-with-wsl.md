@@ -1,19 +1,20 @@
-# Installation of Docker mit Skripten
+# Installation of Docker with Scripts
 
-Im ersten Schritt ist es notwenidig, dass eine WSL Distribution installiert wird oder bereits besteht.
+1st you need a WSL distribution. If no distro exists, install one distro. In all examples we use Ubuntu distribution.
 ```
 wsl --install -d [distro] --name [distro_name]
 ```
-Die Option *--name* ist optional.
+The option *--name* is not required.
 
 ## Linux-Setup
-Erstelle eine docker-auto-install-on-windows-with-wsl-setup.sh* Datei und kopiere den Inhalt von setup-docker.sh hinein.
-Führe das Skript in **WSL** aus.
+Copy the file *docker-auto-install-on-windows-with-wsl-setup.sh* to your **WSL distribution** and execute it.
 
 ## Windows-Setup
-Führe das Skript *docker-auto-install-on-windows-with-wsl-setup.ps1* aus:
+Execute the file *docker-auto-install-on-windows-with-wsl-setup.ps1* at your Windows system:
 ```
 setup-windows.ps1 -DistroName "[distro_name]" -WslUser "[WSL-User]"
 ```
 - [distro_name]: Der Name der Distro (original oder benannt über Option --name)
 - [WSL-User]: Der angelegte User in der WSL-Distribution
+
+After executing both files, the setup has to be complete.
